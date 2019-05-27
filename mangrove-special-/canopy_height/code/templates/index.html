@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Mangroves Main Screen</title>
+        <link rel="stylesheet" href="{{ url_for('static', filename='bootstrap-4.3.1-dist/css/bootstrap.min.css')}}" type="text/css">
+    </head>
+    <body class = "p-5">
+
+  
+        <!-- Container -->
+        <div class = "container bg-secondary rounded p-5">
+            
+            <!-- Main Header -->
+            <h1 class="text-center text-white">Mangroves Main Screen</h1>
+        
+            <!-- 1st row -->
+            <div class = "row ">
+                <div class="col p-4 d-flex justify-content-center">
+                    <!-- Enable Video Feed Button -->
+		    <button class="btn btn-primary" id="videoButton" type="button" data-toggle="collapse" data-target="#videoHolder" aria-expanded="false" aria-controls="videoHolder">Enable Video Feed</button>
+                </div>
+            </div>
+            
+            <!-- 1.5th row -->
+            <div class = "row ">
+                <div class="col p-4 d-flex justify-content-center">
+		    <div class="collapse" id="videoHolder">
+			      <div class="card card-body">
+					<center><img src="stream.mjpg" width="640" height="480"></center>
+			      </div>
+		    </div>
+                </div>
+            </div>
+
+            <!-- 2nd row -->
+            <table class="table table-dark">
+                <thead>
+                    <tr>
+                        <th scope="col"></th>
+                        <th scope="col">Altitude (m)</th>
+                        <th scope="col">Pressure (kPa)</th>
+                        <th scope="col">Celsius (C)</th>
+                        <th scope="col">Fahrenheit (F)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <th scope="row">Live Measurement</th>
+                        <td class=liveMeas>0</td>
+                        <td class=liveMeas>0</td>
+                        <td class=liveMeas>0</td>
+                        <td class=liveMeas>0</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Capture</th>
+                        <td class=capture>0</td>
+                        <td class=capture>0</td>
+                        <td class=capture>0</td>
+                        <td class=capture>0</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <!-- 3rd row -->
+            <div class = "row">
+                <div class="col p-4 d-flex justify-content-center">
+                    <!-- Capture Measurement Button -->
+                    <button id="captureMeasurementBtn" type="button" class="btn btn-primary" onclick method="post">
+                        Capture Measurement
+                    </button>
+                </div>
+                <div class="col p-4 d-flex justify-content-center">
+                    <!-- Upload Modal Button -->
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#uploadModal">
+                        Upload Measurement
+                    </button>
+                </div>
+                <div class="col p-4 d-flex justify-content-center">
+                    <!-- Set Ground Button -->
+                    <button id="setGroundBtn" type="button" class="btn btn-danger">
+                        Set Ground                        
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal -->
+        <div class="modal fade" id="uploadModal" tabindex="-1" role="dialog" aria-labelledby="uploadModal" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                    <h5 class="modal-title" id="uploadModalTitle">Upload Data</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    </div>
+                    <div class="modal-body">
+                        <form enctype="multipart/form-data" method="post" class = "d-flex">
+                            <input class="form-control" id="inputFile" placeholder="Enter file name">
+                            <span class="flex p-1"></span>
+                            <input type = "submit" class="btn btn-primary" value = "Upload"/>
+                        </form>    
+                        <span class="p-2">
+                        <form id = "uploadForm" enctype="multipart/form-data" method="post" class = "d-flex">
+                            <!-- <input type = "file" name = "file" class="btn btn-secondary"/> -->
+                            <div class="custom-file flex-fill">
+                                <input type = "file" id = "file" name = "file" class="custom-file-input" id="customFile">
+                                <label class="custom-file-label" for="customFile">Choose existing file</label>
+                            </div>
+                            <span class="flex p-1"></span>
+                            <input id = "uploadSubmit" type = "submit" class="btn btn-primary" value = "Append"/>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <!-- <button type="button" class="btn btn-primary">upload</button> -->
+                    </div>
+                </div>
+            </div> 
+        </div>
+
+        <!-- Toast Messages -->
+		<div aria-live="polite" aria-atomic="true">
+			
+			<!-- Success Toast -->
+			<div id="successToast" class="toast" style="position: absolute; top: 0; right: 0;" data-delay="3000">
+				<div class="toast-header">
+				<div class="rounded mr-2 bg-success p-2"></div>
+				<strong class="mr-auto">File Upload</strong>
+				<small>now</small>
+				<button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
+				<span aria-hidden="true">&times;</span>
+				</button>
+				</div>
+				<div class="toast-body">
+				<b>Success</b>
+				<span id="successToastMsg"></span>
+				</div>
+			</div>
+			
+			<!-- Warning Toast -->
+			<div id="warningToast" class="toast" style="position: absolute; top: 0; right: 0;" data-delay="3000">
+				<div class="toast-header">
+				<div class="rounded mr-2 bg-warning p-2"></div>
+				<strong class="mr-auto">File Upload</strong>
+				<small>now</small>
+				<button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
+				<span aria-hidden="true">&times;</span>
+				</button>
+				</div>
+				<div class="toast-body">
+				<b>Warning</b>
+				<span id="warningToastMsg"></span>
+				</div>
+			</div>
+			
+			<!-- Danger Toast -->
+			<div id="dangerToast" class="toast" style="position: absolute; top: 0; right: 0;" data-delay="3000">
+				<div class="toast-header">
+				<div class="rounded mr-2 bg-danger p-2"></div>
+				<strong class="mr-auto">File Upload</strong>
+				<small>now</small>
+				<button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
+				<span aria-hidden="true">&times;</span>
+				</button>
+				</div>
+				<div class="toast-body">
+				<b>Error</b>
+				<span id="dangerToastMsg"></span>
+				</div>
+			</div>
+		</div>
+
+    
+        <!-- Bootstrap 4.3.1 & Jquery 3.4.1 minimized version -->
+        <script type="text/javascript" src="{{ url_for('static', filename='bootstrap-4.3.1-dist/js/jquery-3.4.1.min.js')}}"></script>
+        <script type="text/javascript" src="{{ url_for('static', filename='bootstrap-4.3.1-dist/js/bootstrap.min.js')}}"></script>
+        <script type="text/javascript" src="{{ url_for('static', filename='custom.js')}}"></script>
+    </body>
+</html>
