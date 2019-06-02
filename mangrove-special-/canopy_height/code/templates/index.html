@@ -96,17 +96,19 @@
                     </button>
                     </div>
                     <div class="modal-body">
-                        <form enctype="multipart/form-data" method="post" class = "d-flex">
-                            <input class="form-control" id="inputFile" placeholder="Enter file name">
-                            <span class="flex p-1"></span>
-                            <input type = "submit" class="btn btn-primary" value = "Upload"/>
-                        </form>    
-                        <span class="p-2">
+                        <!-- <form class = "d-flex"> -->
+                        <label for="fileLocationInput">File Location</label>
+                        <input type="text" class="form-control" id="fileLocationInput" value="./uploads">
+                            <!-- <span class="flex p-1"></span> -->
+                            <!-- <button id="" type = "button" class="btn btn-primary" value = "Upload">Upload</button> -->
+                        <!-- </form>     -->
+                        <label for="uploadForm">File Name</label>
                         <form id = "uploadForm" enctype="multipart/form-data" method="post" class = "d-flex">
                             <!-- <input type = "file" name = "file" class="btn btn-secondary"/> -->
                             <div class="custom-file flex-fill">
-                                <input type = "file" id = "file" name = "file" class="custom-file-input" id="customFile">
-                                <label class="custom-file-label" for="customFile">Choose existing file</label>
+                                <input type="text" id="file" name="file" class="form-control" placeholder="Enter file name">
+                                <!-- <input type = "file" id = "file" name = "file" class="custom-file-input" id="customFile"> -->
+                                <!-- <label class="custom-file-label" for="customFile">Choose existing file</label> -->
                             </div>
                             <span class="flex p-1"></span>
                             <input id = "uploadSubmit" type = "submit" class="btn btn-primary" value = "Append"/>

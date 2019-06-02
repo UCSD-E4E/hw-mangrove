@@ -1,6 +1,5 @@
 # Responsible for uploading files
 import os
-import simplejson as json
 from flask import Blueprint, request, redirect, url_for, send_from_directory, render_template, jsonify, flash, current_app as app, Response
 from werkzeug.utils import secure_filename
 

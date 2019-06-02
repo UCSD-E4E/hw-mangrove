@@ -35,8 +35,11 @@ $('#uploadForm').submit(function(event) {
 	event.preventDefault();
 	data['time'] = new Date().toISOString();
 	var formData = new FormData();
-	formData.append('file', $('#file')[0].files[0]);
+	// console.log($('#file').val());
+	// formData.append('file', $('#file')[0].files[0]);
+	formData.append('fileName', $('#file').val());
 	formData.append('data', JSON.stringify(data));
+	formData.append('fileLocation', $('#fileLocationInput').val());
 	console.log(formData);
 
 	$.ajax({
@@ -50,15 +53,19 @@ $('#uploadForm').submit(function(event) {
 		success: function(data){
 			console.log(data);
 			if (data.result == 'Success'){
-				$('#successToastMsg').html(": File has been succesfully saved");
+				$('#successToastMsg').html(": File has been succesfully saved ("+ data.result +")");
 				$('#successToast').toast('show');
 			}
 			else if (data.result == 'No file part'){
-				$('#warningToastMsg').html(": Failed to upload (No file input)");
+				$('#warningToastMsg').html(": Failed to upload ("+ data.result +")");
 				$('#warningToast').toast('show');
 			}
-			else if (data.result == 'No file selected'){
-				$('#warningToastMsg').html(": Failed to upload (No file input)");
+			else if (data.result == 'No file name'){
+				$('#warningToastMsg').html(": Failed to upload ("+ data.result +")");
+				$('#warningToast').toast('show');
+			}
+			else if (data.result == 'File path error'){
+				$('#warningToastMsg').html(": Failed to upload ("+ data.result +")");
 				$('#warningToast').toast('show');
 			}
 			else {
