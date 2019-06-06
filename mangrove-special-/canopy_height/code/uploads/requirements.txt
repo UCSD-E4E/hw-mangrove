@@ -1,2 +1,0 @@
-{"data": "{\"altitude\":0,\"pressure\":0,\"cTemp\":0,\"fTemp\":0,\"time\":\"2019-05-15T02:45:57.321Z\"}"}
-{"data": "{\"altitude\":0,\"pressure\":0,\"cTemp\":0,\"fTemp\":0,\"time\":\"2019-05-15T02:46:37.327Z\"}"}

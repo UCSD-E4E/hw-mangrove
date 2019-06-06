@@ -1,11 +1,13 @@
 // Custom javascript
 
-var data = {
-	'altitude': 0,
-	'pressure': 0,
-	'cTemp': 0,
-	'fTemp': 0,
-	'time': ""
+var measureData = {
+	height: 0,
+	altitude: 0,
+	ground: 0,
+	pressure: 0,
+	cTemp: 0,
+	fTemp: 0,
+	time: ""
 }
 
 var measurements = [];
@@ -30,17 +32,28 @@ function getAvgMeasurements()
 	return avg;
 }
 
+function updateData()
+{
+	live = document.getElementsByClassName("liveMeas");
+	capture = document.getElementsByClassName("capture");
+	measureData['height'] = parseInt(live[0].innerHTML)
+	measureData['ground'] = parseInt(capture[0].innerHTML)
+	measureData['pressure'] = parseInt(live[1].innerHTML)
+	measureData['cTemp'] = parseInt(live[2].innerHTML)
+	measureData['fTemp'] = parseInt(live[3].innerHTML)
+}
+
 // https://stackoverflow.com/questions/41709792/bootstrap-modal-with-wtf
 $('#uploadForm').submit(function(event) {
 	event.preventDefault();
-	data['time'] = new Date().toISOString();
+	updateData();
+	measureData['time'] = new Date().toISOString();
 	var formData = new FormData();
-	// console.log($('#file').val());
-	// formData.append('file', $('#file')[0].files[0]);
 	formData.append('fileName', $('#file').val());
-	formData.append('data', JSON.stringify(data));
+	formData.append('data', JSON.stringify(measureData));
 	formData.append('fileLocation', $('#fileLocationInput').val());
 	console.log(formData);
+	console.log(JSON.stringify(measureData));
 
 	$.ajax({
 		type: "POST",
@@ -79,6 +92,45 @@ $('#uploadForm').submit(function(event) {
 		}
 	})
 })
+
+
+function loadData(event){
+	event.preventDefault();
+	$.ajax({
+		type: "GET",
+		url: "/readfile",
+		processData: false,
+		contentType: 'application/json;charset=UTF-8',
+		success: function(data){
+			console.log(data);
+			if (data.result == "Error") {
+				$('#dangerToastMsg').html(": No data to read");
+				$('#dangerToast').toast('show');
+			}
+			else {
+				console.log(data.data);
+				res = JSON.parse(data.data);
+				res.forEach(d => {
+					try {
+						date = new Date(d.time);
+						$('#readtable').append('<tr><td><b>' + d.id + '</b></td><td> '+ d.height+ '</td><td> ' + d.altitude + '</td><td>' + d.ground + '</td><td>' + d.cTemp + '</td><td>' + d.fTemp + '</td><td>' + date + '</td></tr>');
+					}
+					catch {}
+				});
+			}	
+		},
+		error: function(res){
+			$('#dangerToastMsg').html(": Failed to read");
+			$('#dangerToast').toast('show');
+		}
+	})
+}
+
+$('#readDataBtn').one("click", function(event){ loadData(event) });
+$('#moreDetailBtn').click(function(event){ 
+	$('#readData').empty()
+	loadData(event) 
+});
 
 $('#videoButton').click(function(event) {
 	event.preventDefault();

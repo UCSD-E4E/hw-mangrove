@@ -77,6 +77,12 @@
                     </button>
                 </div>
                 <div class="col p-4 d-flex justify-content-center">
+                    <!-- Upload Modal Button -->
+                    <button id="readDataBtn" type="button" class="btn btn-primary" data-toggle="modal" data-target="#readModal">
+                        Read Existing Data
+                    </button>
+                </div>
+                <div class="col p-4 d-flex justify-content-center">
                     <!-- Set Ground Button -->
                     <button id="setGroundBtn" type="button" class="btn btn-danger">
                         Set Ground                        
@@ -85,7 +91,7 @@
             </div>
         </div>
 
-        <!-- Modal -->
+        <!-- Upload Modal -->
         <div class="modal fade" id="uploadModal" tabindex="-1" role="dialog" aria-labelledby="uploadModal" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
@@ -96,27 +102,67 @@
                     </button>
                     </div>
                     <div class="modal-body">
-                        <!-- <form class = "d-flex"> -->
-                        <label for="fileLocationInput">File Location</label>
-                        <input type="text" class="form-control" id="fileLocationInput" value="./uploads">
-                            <!-- <span class="flex p-1"></span> -->
-                            <!-- <button id="" type = "button" class="btn btn-primary" value = "Upload">Upload</button> -->
-                        <!-- </form>     -->
-                        <label for="uploadForm">File Name</label>
-                        <form id = "uploadForm" enctype="multipart/form-data" method="post" class = "d-flex">
-                            <!-- <input type = "file" name = "file" class="btn btn-secondary"/> -->
-                            <div class="custom-file flex-fill">
-                                <input type="text" id="file" name="file" class="form-control" placeholder="Enter file name">
-                                <!-- <input type = "file" id = "file" name = "file" class="custom-file-input" id="customFile"> -->
-                                <!-- <label class="custom-file-label" for="customFile">Choose existing file</label> -->
-                            </div>
-                            <span class="flex p-1"></span>
-                            <input id = "uploadSubmit" type = "submit" class="btn btn-primary" value = "Append"/>
-                        </form>
+                        <div class="mb-4">
+                            <h5>Flat file</h5>
+                            <label for="fileLocationInput">File Location</label>
+                            <input type="text" class="form-control" id="fileLocationInput" value="./uploads" disabled>
+                            <label for="uploadForm">File Name</label>
+                            <form id = "uploadFormEX" enctype="multipart/form-data" method="post" class = "d-flex">
+                                <div class="custom-file flex-fill">
+                                    <input type="text" id="file" name="file" class="form-control" placeholder="Enter file name" value="temp" disabled>
+                                </div>
+                                <span class="flex p-1"></span>
+                                <input id = "uploadSubmitEX" type = "submit" class="btn btn-primary" value = "Append" disabled/>
+                            </form>
+                        </div>
+                        <div>
+                            <h5>Database</h5>
+                            <form id = "uploadForm" enctype="multipart/form-data" method="post" class = "d-flex">
+                                <input id = "uploadSubmit" type = "submit" class="btn btn-primary" value = "Upload"/>
+                            </form>
+                        </div>
                     </div>
                     <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <!-- <button type="button" class="btn btn-primary">upload</button> -->
+                    </div>
+                </div>
+            </div> 
+        </div>
+        
+        <!-- Read Modal -->
+        <div class="modal fade" id="readModal" tabindex="-1" role="dialog" aria-labelledby="uploadModal" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                    <h5 class="modal-title" id="readModalTitle">Read Data</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="table-responsive">
+                            <table id='readtable' class="table table-hover">
+                                <thead>
+                                    <tr>
+                                    <th scope="col">#</th>
+                                    <th scope="col">Height(m)</th>
+                                    <th scope="col">Altitude(m)</th>
+                                    <th scope="col">Ground(m)</th>
+                                    <th scope="col">C&#176</th>
+                                    <th scope="col">F&#176</th>
+                                    <th scope="col">Time</th>
+                                    </tr>
+                                </thead>
+                                <tbody id='readData'>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="d-flex justify-content-center">
+                            <button id="moreDetailBtn" type="button" class="btn btn-primary">Reload</button>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                     </div>
                 </div>
             </div> 

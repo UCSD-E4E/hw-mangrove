@@ -1,8 +1,10 @@
-# Responsible for uploading files
+# Responsible for uploading data
 import os
-import simplejson as json
+import json
 from flask import Blueprint, request, redirect, url_for, send_from_directory, render_template, jsonify, flash, current_app as app
 from werkzeug.utils import secure_filename
+from sqlalchemy import create_engine
+from mangroves_data import entries
 
 ALLOWED_EXTENSIONS = set(['txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif', 'js', 'py', 'json'])
 upload_file = Blueprint('upload_file', __name__)
@@ -40,9 +42,10 @@ def upload():
         if allowed_file(filename):
             try:
                 # with open(os.path.join(app.config['UPLOAD_FOLDER'], filename),"a") as fo:
-                with open(os.path.join(request.form.get('fileLocation'), filename),"a") as fo:
-                    json.dump(request.form.get('data'), fo)
-                    fo.write('\n')
+                # with open(os.path.join(request.form.get('fileLocation'), filename),"a") as fo:
+                engine = create_engine('sqlite:///mangroves_database.db', convert_unicode=True)
+                conn = engine.connect()
+                conn.execute(entries.insert(), json.loads(request.form.get('data')))
             except EnvironmentError:
                 return jsonify(result='File path error')
             return jsonify(result='Success')
