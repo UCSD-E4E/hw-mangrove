@@ -6,7 +6,6 @@
         <link rel="stylesheet" href="{{ url_for('static', filename='bootstrap-4.3.1-dist/css/bootstrap.min.css')}}" type="text/css">
     </head>
     <body class = "p-5">
-
   
         <!-- Container -->
         <div class = "container bg-secondary rounded p-5">
@@ -25,13 +24,15 @@
             <!-- 1.5th row -->
             <div class = "row ">
                 <div class="col p-4 d-flex justify-content-center">
-		    <div class="collapse" id="videoHolder">
-			      <div class="card card-body">
-					<center><img src="stream.mjpg" width="640" height="480"></center>
-			      </div>
-		    </div>
+                    <div class="collapse" id="videoHolder">
+                        <div class="card card-body">
+                            <center><img src="stream.mjpg" width="640" height="480"></center>
+                        </div>
+                    </div>
                 </div>
             </div>
+
+            <div id="chartContainer" style="height: 300px; width: 100%;"></div>
 
             <!-- 2nd row -->
             <table class="table table-dark">
@@ -224,6 +225,7 @@
         <!-- Bootstrap 4.3.1 & Jquery 3.4.1 minimized version -->
         <script type="text/javascript" src="{{ url_for('static', filename='bootstrap-4.3.1-dist/js/jquery-3.4.1.min.js')}}"></script>
         <script type="text/javascript" src="{{ url_for('static', filename='bootstrap-4.3.1-dist/js/bootstrap.min.js')}}"></script>
+        <script type="text/javascript" src="{{ url_for('static', filename='canvasjs-2.3.1/canvasjs.min.js')}}"></script>
         <script type="text/javascript" src="{{ url_for('static', filename='custom.js')}}"></script>
     </body>
 </html>
