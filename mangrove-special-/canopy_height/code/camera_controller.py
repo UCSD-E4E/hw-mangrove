@@ -48,7 +48,7 @@ def toggle_camera():
         else:
             print "starting the camera"
             camera = picamera.PiCamera(resolution='320x240', framerate=12)
-            camera.start_recording(output, format='mjpeg')
+            camera.start_recording(output, format='h264')
             camera_is_enabled = True
     return jsonify(result="Success")
 
