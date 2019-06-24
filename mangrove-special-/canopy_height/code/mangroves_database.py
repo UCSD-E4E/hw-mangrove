@@ -14,3 +14,7 @@ metadata = MetaData()
 def init_db():
     import mangroves_data
     metadata.create_all(bind=engine)
+
+def drop_tables():
+    import mangroves_data
+    metadata.drop_all(bind=engine)

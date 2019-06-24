@@ -1,4 +1,4 @@
-from sqlalchemy import Table, Column, Integer, String, DateTime
+from sqlalchemy import Table, Column, Integer, String, DateTime, Float
 from sqlalchemy.orm import mapper
 from mangroves_database import metadata#Base, metadata, db_session
 
@@ -25,11 +25,11 @@ from mangroves_database import metadata#Base, metadata, db_session
 
 entries = Table('entries', metadata,
         Column('id', Integer, primary_key=True),
-        Column('height', Integer),
-        Column('altitude', Integer),
-        Column('ground', Integer),
-        Column('cTemp', Integer),
-        Column('fTemp', Integer),
+        Column('height', Float),
+        Column('altitude', Float),
+        Column('ground', Float),
+        Column('cTemp', Float),
+        Column('fTemp', Float),
         Column('time', String)
 )
 

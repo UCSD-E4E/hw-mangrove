@@ -41,7 +41,7 @@ function updateData()
 	measureData['pressure'] = parseFloat(live[1].innerHTML)
 	measureData['cTemp'] = parseFloat(live[2].innerHTML)
 	measureData['fTemp'] = parseFloat(live[3].innerHTML)
-	measureData['height'] = measureData['altitude']-measureData['height']
+	measureData['height'] = measureData['altitude']-measureData['ground']
 }
 
 // https://stackoverflow.com/questions/41709792/bootstrap-modal-with-wtf
@@ -246,8 +246,7 @@ var updateChart = function (count) {
 
 	for (var j = 0; j < count; j++) {
 		updateData()
-		console.log(measureData['altitude'])
-		yVal = yVal+measureData['altitude'];
+		yVal = measureData['altitude'];
 		dps.push({
 			x: xVal,
 			y: yVal

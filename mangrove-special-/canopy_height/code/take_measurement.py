@@ -75,8 +75,8 @@ class MPL3115A2():
 		data = bus.read_i2c_block_data(MPL3115A2_DEFAULT_ADDRESS, MPL3115A2_REG_STATUS, 6)
  
 		# Convert the data to 20-bits
-		tHeight = ((data[1] * 65536) + (data[2] * 256) + (data[3] & 0xF0)) / 16
-		temp = ((data[4] * 256) + (data[5] & 0xF0)) / 16
+		tHeight = ((data[1] * 65536.0) + (data[2] * 256.0) + (data[3] & 0xF0)) / 16.0
+		temp = ((data[4] * 256) + (data[5] & 0xF0)) / 16.0
  
 		altitude = tHeight / 16.0
 		cTemp = temp / 16.0
@@ -122,6 +122,6 @@ def takeMeasurement():
         return jsonify(altitude=alt['a'], pressure=pres['p'], cTemp=alt['c'], fTemp=alt['f'])
         '''
 	alt = mpl3115a2.read_alt_temp()
-        time.sleep(0.5)        
+        time.sleep(1)        
         return jsonify(altitude=alt['a'], pressure=0, cTemp=alt['c'], fTemp=alt['f'])
 
