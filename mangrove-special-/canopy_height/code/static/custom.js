@@ -17,6 +17,7 @@ var ground = 0;
 function getAvgMeasurements()
 {
 	var avg = { 'altitude' : 0, 'pressure' : 0, 'cTemp' : 0, 'fTemp' : 0 };
+	i = measurements.length-1;
 	for (var i = 0; i < measurements.length; i++)
 	{
 		avg.altitude += measurements[i].altitude;
@@ -198,7 +199,7 @@ function pollMeasurements()
 			values[3].innerHTML = data.fTemp.toPrecision(5);
 
 			//wait half a second and then make another call to the same function
-			setTimeout(function() {pollMeasurements();}, 500);
+			setTimeout(function() {pollMeasurements();}, 1000);
 		},
 		error: function(data){
 			$('#dangerToastMsg').html(": Failed to take measurement");

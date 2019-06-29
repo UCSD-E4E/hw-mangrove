@@ -107,6 +107,11 @@ mpl3115a2 = MPL3115A2()
 mpl3115a2.control_alt_config()
 mpl3115a2.data_config()
 
+import datetime
+now = datetime.datetime.now()
+date = str(now.month)+"-"+str(now.day)+"-"+str(now.year)
+with open("logs/"+date+".txt", 'a') as f:
+    f.write("Writing new log file as of: "+str(now.hour)+":"+str(now.minute)+":"+str(now.second)+"\n")
 
 @take_measurement.route('/take_measurement', methods = ['GET', 'POST'])
 def takeMeasurement():
@@ -121,7 +126,12 @@ def takeMeasurement():
 	pres = mpl3115a2.read_pres()
         return jsonify(altitude=alt['a'], pressure=pres['p'], cTemp=alt['c'], fTemp=alt['f'])
         '''
-	alt = mpl3115a2.read_alt_temp()
-        time.sleep(1)        
+        time.sleep(.5)        
+        alt = mpl3115a2.read_alt_temp()
+        with open("logs/"+date+".txt", 'a') as f:
+            f.write("Altitude: "+str(format(alt['a'],'.5f'))
+                    +"\tPressure: "+str(format(0,'.5f'))
+                    +"\tCTemp: "+str(format(alt['c'],'.5f'))
+                    +" \tfTemp: "+str(format(alt['f'],'.5f'))+"\n")
         return jsonify(altitude=alt['a'], pressure=0, cTemp=alt['c'], fTemp=alt['f'])
-
+         
