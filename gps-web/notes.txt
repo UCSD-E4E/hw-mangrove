@@ -1,0 +1,7 @@
+
+
+
+
+
+@chromium-browser --start-fullscreen http://127.0.0.1:5000/
+nohup python /path/to/test.py &

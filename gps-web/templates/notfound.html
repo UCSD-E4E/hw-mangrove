@@ -6,6 +6,7 @@
     <link rel="stylesheet" href="{{url_for('static', filename='pan/L.Control.Pan.css')}}">
     <link rel="stylesheet" href="{{url_for('static', filename='demo.css')}}">
     <link rel="stylesheet" href="{{url_for('static', filename='bootstrap.min.css')}}">
+    <meta http-equiv="refresh" content="5" >
 </head>
 <nav class="navbar navbar-expand-sm navbar-dark bg-dark">
     <a class="navbar-brand" href="#">E4E Mangrove Monitoring GPS</a>
@@ -19,11 +20,6 @@
 
     </ul>
 </nav>
-<script>
-    function refreshPage(){
-        window.location.reload();
-    } 
-    </script>
 <body>
     <div class="mx-auto" style="width:auto">
         <div class ="row" style="width=100%">
@@ -35,9 +31,8 @@
                     zoom: 15
                     });
                     L.tileLayer('/static/atlas/{z}/{x}/{y}.jpg',{
-                        attribution: '&copy; <a>USGS</a> contributors'
+                    attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
                     }).addTo(map);
-                    var marker = L.marker({{coordinates}}).addTo(map);
                     L.control.pan().addTo(map);
                 </script>
      
@@ -46,10 +41,9 @@
         </div>
         <div class="card" style="width: 100%;">
             <div class="card-body">
-                    <h5 style="text-align: center"class="card-title">Current Coordinates ( <span style = "color: green">Lat: Long: </span> )</h5>
-                    <button class="btn btn-success" onClick="refreshPage()" data-toggle="button">Refresh</button>
+                    <h5 style="text-align: center"class="card-title">Current Coordinates: <span style = "color: red">Signal not Found</span></h5>
                     <div class="progress">
-                            <div class="progress-bar progress-bar-striped progress-bar-animated bg-success" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%"></div>
+                            <div class="progress-bar progress-bar-striped progress-bar-animated bg-warning" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%"></div>
                         </div>
             </div>
         </div>

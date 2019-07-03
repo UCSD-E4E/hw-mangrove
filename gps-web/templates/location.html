@@ -30,9 +30,10 @@
                     center: {{ coordinates }},
                     zoom: 15
                     });
-                    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                    attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+                    L.tileLayer('/static/atlas/{z}/{x}/{y}.jpg',{
+                    attribution: '&copy; <a>USGS</a> contributors'
                     }).addTo(map);
+                    var marker = L.marker({{ coordinates }}).addTo(map);
                     L.control.pan().addTo(map);
                 </script>     
             </div>
